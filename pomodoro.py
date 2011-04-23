@@ -5,11 +5,12 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 from time import time
+from math import floor
 gtk.gdk.threads_init()
 import gobject
 
 #Parameters
-MIN_WORK_TIME = 60 * 10 # min work time in seconds
+MIN_WORK_TIME = 60 * 1 # min work time in seconds
 
 
 class Pomodoro:
@@ -83,6 +84,12 @@ class Pomodoro:
         self.icon.set_blinking(False)
         self.icon.set_visible(True)
         self.start_working_time = 0
+    def format_time(self,seconds):
+        minutes = floor(seconds / 60)
+        if minutes > 1:
+            return "%d minutes" % minutes
+        else:
+            return "%d minute" % minutes
     def icon_click(self,dummy):
         delta = time() - self.start_working_time
         if self.state == "IDLE":
@@ -90,24 +97,22 @@ class Pomodoro:
             self.start_working_time = time()
             self.icon.set_blinking(True)
             self.icon.set_tooltip("Working...")
-        elif self.state == "WORKING":
-            if delta < MIN_WORK_TIME:
-                self.icon.set_tooltip("Not good: worked only %.0f minutes" % 
-                        delta / 60)
+        else:
+            if self.state == "WORKING":
                 self.icon.set_blinking(False)
-            else:
-                self.icon.set_tooltip("Good! worked %.0f minutes" % 
-                        delta / 60)
+                self.icon.set_tooltip("Not good: worked only %s." % 
+                        self.format_time(delta))
+            elif self.state == "OK":
+                self.icon.set_tooltip("Good! worked %s." % 
+                        self.format_time(delta))
             self.state="IDLE"
-        elif self.state == "OK":
-            pass
     def update(self):
         """This method is called everytime a tick interval occurs"""
         delta = time() - self.start_working_time
         if self.state == "IDLE":
             pass
         else:
-            self.icon.set_tooltip("Working for %.0f minutes..." % (delta/60))
+            self.icon.set_tooltip("Working since %s..." % self.format_time(delta))
             if self.state == "WORKING":
                 if delta > MIN_WORK_TIME:
                     self.state = "OK"
