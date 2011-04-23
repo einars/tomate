@@ -10,7 +10,7 @@ gtk.gdk.threads_init()
 import gobject
 
 #Parameters
-MIN_WORK_TIME = 60 * 1 # min work time in seconds
+MIN_WORK_TIME = 60 * 10 # min work time in seconds
 
 class Pomodoro:
     def __init__(self):
@@ -33,13 +33,14 @@ class Pomodoro:
         if state == "idle":
             delta = time() - self.start_working_time
             if old_state == "ok":
-                self.icon.set_tooltip("Good! worked for %s." % 
+                self.icon.set_tooltip("Good! Worked for %s." % 
                         self.format_time(delta))
             elif old_state == "working":
                 self.icon.set_tooltip("Not good: worked for only %s." % 
                         self.format_time(delta))
         else:
-            self.start_working_time = time()
+            if state == "working":
+                self.start_working_time = time()
             delta = time() - self.start_working_time
             self.icon.set_tooltip("Working for %s..." % self.format_time(delta))
         self.state=state
