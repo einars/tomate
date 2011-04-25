@@ -14,7 +14,7 @@ MIN_WORK_TIME = 60 * 10 # min work time in seconds
 
 class Pomodoro:
     def __init__(self):
-        self.icon=gtk.status_icon_new_from_file("idle.svg")
+        self.icon=gtk.status_icon_new_from_file("idle.png")
         self.icon.set_tooltip("Idle")
         self.state = "idle"
         self.tick_interval=10 #number of seconds between each poll
@@ -29,7 +29,7 @@ class Pomodoro:
             return "%d minute" % minutes
     def set_state(self,state):
         old_state=self.state
-        self.icon.set_from_file(state+".svg")
+        self.icon.set_from_file(state+".png")
         if state == "idle":
             delta = time() - self.start_working_time
             if old_state == "ok":
