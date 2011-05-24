@@ -1,0 +1,37 @@
+Comme beaucoup d'entre nous, je souffre de problèmes de procrastination et
+d'attention, surtout devant un ordinateur. Comment résister à l'appel de
+l'Internet et se concentrer sur une tâche importante, mais pas forcément
+passionnante ?
+
+Je me suis donc mis à la recherche d'outils qui puissent m'aider à mieux me
+concentrer. Je suis tout d'abord tombé sur un très bon livre recommandé par
+Papey : "Comment ne pas tout remettre au lendemain", par Bruno Koelz.
+
+Finalement, pour moi, le diagnostic est le suivant : le plus difficile est de
+s'y mettre, c'est-à-dire de se concentrer pendant un laps de temps suffisant
+pour se plonger dans le problème. Une fois cette étape passée, continuer est
+beaucoup plus simple.
+
+J'ai donc développé une petite applet qui me permet de passer un contrat avec
+moi-même: en cliquant sur une petite icône, je m'engage à me concentrer sur un
+problème donné pendant au moins dix minutes. L'icône devient alors rouge pendant
+dix minutes, après quoi elle passe au vert. Je suis alors libre de m'arrêter ou
+de continuer.
+
+Cette applet n'offre aucune possibilité de configuration, aucun log, bref,
+aucune fonctionnalité qui n'est pas indispensable à 100 % pour atteindre son
+objectif. En effet j'ai remarqué que passer du temps à jouer avec les
+paramètres d'un outil de productivité est une excellente manière de perdre
+son temps !
+
+Pourquoi le nom « tomate » ? Tout simplement parce que je me suis inspiré
+d'une technique concurrente, la Pomodoro technique, qui consiste à
+travailler par intervalles de 25 min, avec des pauses de 5 minutes entre. Je
+trouve ma solution supérieure, pour deux raisons: tout d'abord, s'engager à
+travailler 25 min sans interruption est beaucoup plus difficile que 10
+minutes uniquement. Il est donc plus difficile de "s'y mettre", ce qui est
+pourtant l'objectif! D'autre part, il me semble stupide de s'imposer une
+pause au bout de 25 minutes, si l'on est bien concentré.
+
+Au niveau du code, il s'agit d'une applet toute simple écrite en Python pour
+GTK. Le projet est hébergé chez Gitorious. Voici une petite capture d'écran:

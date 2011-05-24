@@ -1,0 +1,36 @@
+Like many of us, I suffer from attention and procrastination problems,
+especially when in front of a computer. How can one focus on the mundane task at
+hand when the appeal of the Internet is just two clicks away?
+
+I started a quest for tools and ideas to help me concentrate (I know, I
+know...). I found a very good book, unfortunately written in French: "Comment ne
+pas tout remettre au lendemain", by Bruno Koelz.
+
+It turns out the diagnosis is as follows:: the hardest part of not
+procrastinating is getting to work, by which I mean staying concentrated long
+enough to really get into the problem. Once this stage is passed, you usually
+enter a state of flow and continuing to work is a lot easier and more rewarding.
+
+For this reason, I wrote a very small applet that allows me to pass a contract
+with myself: by clicking the icon, I commit to fully concentrate on a given
+problem for no less than 10 minutes. The icon becomes red for ten minutes, after
+which it turns green. I am then free to either continue working or do something
+else.
+
+The duration is voluntarily small because no matter how boring the task is, ten
+minutes is always doable. Knowing I have an escape, it is easier to commit.
+
+Since tweaking productivity application parameters is a great way to waste time,
+the applet has absolutely no configuration options, dialogs, logs, etc. I tried
+to make it as simple as possible and to avoid including any feature that is not
+absolutely necessary to accomplish the goal.
+
+Why "Tomate"? Tomate is the French word for tomato, or "Pommodoro" in Italian,
+which is the name of a similar and popular technique. The pommodoro technique
+consists in working in sets of 25 minutes, with mandatory breaks between the
+chunks. I feel my method is more efficient, because it is a waste to take breaks
+when you're concentrated and don't need them.
+
+About the code: the applet is written in Python 2 and PyGTK. It is only tested
+on linux, but it should work on other platforms as well. Feedback welcome!
+(joel.schaerer@gmail.com)
