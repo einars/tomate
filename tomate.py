@@ -1,5 +1,4 @@
 #!/usr/bin/env python2
-from __future__ import division
 
 import pygtk
 pygtk.require('2.0')
@@ -10,68 +9,77 @@ from math import floor
 gtk.gdk.threads_init()
 import gobject
 
-#Parameters
-MIN_WORK_TIME = 60 * 10 # min work time in seconds
+YELLOW_AFTER = 60 * 9
+GREEN_AFTER = 60 * 44
+#YELLOW_AFTER = 4
+#GREEN_AFTER = 9
 
 class Pomodoro:
-    def __init__(self):
-        self.icon=gtk.status_icon_new_from_file(self.icon_directory()+"idle.png")
-        self.icon.set_tooltip("Idle")
-        self.state = "idle"
-        self.tick_interval=10 #number of seconds between each poll
-        self.icon.connect('activate',self.icon_click)
-        self.icon.set_visible(True)
-        self.start_working_time = 0
-    def format_time(self,seconds):
+    def __init__(s):
+        s.icon=gtk.status_icon_new_from_file(s.icon_directory() + "idle.png")
+        s.icon.set_tooltip("Idle")
+        s.state = "idle"
+        s.tick_interval = 5 # number of seconds between each poll
+        s.icon.connect('activate', s.icon_click)
+        s.icon.set_visible(True)
+        s.work_started = 0
+        s.update()
+
+    def format_time(s, seconds):
         minutes = floor(seconds / 60)
         if minutes > 1:
             return "%d minutes" % minutes
         else:
             return "%d minute" % minutes
-    def set_state(self,state):
-        old_state=self.state
-        self.icon.set_from_file(self.icon_directory()+state+".png")
-        if state == "idle":
-            delta = time() - self.start_working_time
-            if old_state == "ok":
-                self.icon.set_tooltip("Good! Worked for %s." % 
-                        self.format_time(delta))
-            elif old_state == "working":
-                self.icon.set_tooltip("Not good: worked for only %s." % 
-                        self.format_time(delta))
-        else:
-            if state == "working":
-                self.start_working_time = time()
-            delta = time() - self.start_working_time
-            self.icon.set_tooltip("Working for %s..." % self.format_time(delta))
-        self.state=state
-    def icon_directory(self):
+
+    def start_work(s):
+        s.work_started = time()
+        s.phase = 1
+        s.state = "working"
+        s.icon.set_from_file(s.icon_directory() + "phase-1.png")
+
+    def start_idling(s):
+        s.state = "idle"
+        s.icon.set_from_file(s.icon_directory() + "idle.png")
+        s.icon.set_tooltip("Worked for %s." % s.format_time(time() - s.work_started))
+
+
+    def icon_directory(s):
         return os.path.dirname(os.path.realpath(__file__)) + os.path.sep
-    def icon_click(self,dummy):
-        delta = time() - self.start_working_time
-        if self.state == "idle":
-            self.set_state("working")
+
+    def icon_click(s, _):
+        delta = time() - s.work_started
+        if s.state == "idle":
+            s.start_work()
         else:
-            self.set_state("idle")
-    def update(self):
-        """This method is called everytime a tick interval occurs"""
-        delta = time() - self.start_working_time
-        if self.state == "idle":
-            pass
-        else:
-            self.icon.set_tooltip("Working for %s..." % self.format_time(delta))
-            if self.state == "working":
-                if delta > MIN_WORK_TIME:
-                    self.set_state("ok")
-        source_id = gobject.timeout_add(self.tick_interval*1000, self.update)
-    def main(self):
+            s.start_idling()
+
+    def update(s):
+        if s.state == "working":
+            delta = time() - s.work_started
+            s.icon.set_tooltip("Working for %s..." % s.format_time(delta))
+
+            current_phase = 1
+            if delta > YELLOW_AFTER:
+                current_phase = 2
+            if delta > GREEN_AFTER:
+                current_phase = 3
+
+
+            if s.phase != current_phase:
+                s.phase = current_phase
+                s.icon.set_from_file( "%sphase-%d.png" % (s.icon_directory(), current_phase))
+                if current_phase == 3:
+                    os.system('aplay ding.wav')
+
+        gobject.timeout_add(s.tick_interval*1000, s.update)
+
+    def main(s):
         # All PyGTK applications must have a gtk.main(). Control ends here
         # and waits for an event to occur (like a key press or mouse event).
-        source_id = gobject.timeout_add(self.tick_interval, self.update)
         gtk.main()
 
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Pomodoro instance and show it
 if __name__ == "__main__":
-    app = Pomodoro()
-    app.main()
+    Pomodoro().main()
