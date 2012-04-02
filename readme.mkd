@@ -1,0 +1,20 @@
+Tomate notification icon
+========================
+
+
+My fork of the nice tomate notification icon,
+
+     https://git.gitorious.org/tomate/
+
+
+Changes from the original:
+
+1. Two icon colors: red for the first 10 minutes, yellow for the next 35 (I
+   work in 45-minute bursts, but the first stage is for the basic self-cheating
+   "ok, I can stop after the 10 minutes if I want to);
+
+2. A sound when the 45 minutes is out (it's actually 44, but I never finish
+   working immediately).
+
+
+Einar Lielmanis, einar@spicausis.lv
