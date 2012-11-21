@@ -41,7 +41,7 @@ class Pomodoro:
 
     def start_idling(s):
         s.state = "idle"
-        os.system('./set-skype-status online')
+        s.skype_status('online')
         s.icon.set_from_file(s.resource("phase-0.png"))
         s.icon.set_tooltip("Worked for %s." % s.format_time(time() - s.work_started))
 
@@ -49,13 +49,17 @@ class Pomodoro:
     def resource(s, file_name):
         return os.path.dirname(os.path.realpath(__file__)) + os.path.sep + file_name
 
+    def skype_status(s, status):
+        os.system(s.resource('set-skype-status') + ' ' + status)
+
+
     def icon_click(s, _):
         delta = time() - s.work_started
         if s.state == "idle":
-            os.system('./set-skype-status invisible')
+            s.skype_status('invisible')
             s.start_work()
         else:
-            os.system('./set-skype-status online')
+            s.skype_status('online')
             s.start_idling()
 
     def triple_ding(s):
@@ -64,7 +68,7 @@ class Pomodoro:
         s.ding()
 
     def ding(s, times = 1):
-        os.system('aplay alarm.wav')
+        os.system('aplay %s' % s.resource('alarm.wav'))
 
     def update(s):
         if s.state == "working":
@@ -79,7 +83,7 @@ class Pomodoro:
             if delta > REYELLOW_AFTER:
                 current_phase = 4
             if delta > OFF_AFTER:
-                os.system('./set-skype-status online')
+                s.skype_status('online')
                 s.icon.set_from_file( s.resource("phase-%d.png" % 0) )
                 s.state = "idle"
                 gobject.timeout_add(200, s.triple_ding)
