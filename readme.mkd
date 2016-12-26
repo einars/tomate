@@ -14,21 +14,20 @@ productive.
 This app uses a set-skype-status script (included) to put skype to invisible as
 soon as the work starts, and aplay to play the ringing sound.
 
-
 notifications:
-  idle: gray
-  click - turns red, skype turns invisible
-  24 minutes - turns yellow
-  25 minutes - turns green, rings
 
-  theoretically this is time to take a short break.
-  practically, I want to "just finish doing this thing" too often and time
-  stretches into eternity, so the following events happen afterwards, if icon
-  is not clicked and the work stopped:
+-  idle: gray
+-  click: turns red, skype turns invisible
+-  24 minutes: turns yellow
+-  25 minutes: turns green, rings
 
-  49 minutes - turns yellow again
-  50 minutes - triple ring "definitely take a break now", icon turns back to
-               gray, skype put back online
+theoretically this is time to take a short break.
+practically, I want to "just finish doing this thing" too often and time
+stretches into eternity, so the following events happen afterwards, if icon
+is not clicked and the work stopped:
+
+- 49 minutes: turns yellow again
+- 50 minutes: triple ring "definitely take a break now", icon turns back to gray, skype put back online
 
 
 Einar Lielmanis, einar@spicausis.lv
